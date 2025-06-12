@@ -14,21 +14,21 @@ def start_ui():
             result_label.config(text=f"Erro: {str(e)}")
 
     app = tk.Tk()
-    app.title("Multilingual Translation Tool")
+    app.title("Ferramenta de Tradução de Linguagens")
 
     ttk.Label(app, text="Text:").grid(column=0, row=0)
     text_input = ttk.Entry(app)
     text_input.grid(column=1, row=0)
 
-    ttk.Label(app, text="Source Language:").grid(column=0, row=1)
+    ttk.Label(app, text="Línguagem atual:").grid(column=0, row=1)
     source_lang_input = ttk.Entry(app)
     source_lang_input.grid(column=1, row=1)
 
-    ttk.Label(app, text="Target Language:").grid(column=0, row=2)
+    ttk.Label(app, text="Línguagem para tradução:").grid(column=0, row=2)
     target_lang_input = ttk.Entry(app)
     target_lang_input.grid(column=1, row=2)
 
-    ttk.Button(app, text="Translate", command=on_translate_click).grid(column=1, row=3)
+    ttk.Button(app, text="Traduzir", command=on_translate_click).grid(column=1, row=3)
 
     result_label = ttk.Label(app, text="")
     result_label.grid(column=0, row=4, columnspan=2)
