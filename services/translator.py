@@ -52,7 +52,7 @@ def detect_language(text):
     }
     params = {
         "text": text,
-        "target_lang": "EN"  # obrigatório mesmo que só para detectar
+        "target_lang": "EN"
     }
 
     response = requests.post(url, headers=headers, data=params)
