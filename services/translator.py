@@ -1,5 +1,3 @@
-"""Serviços de tradução usando a API do DeepL."""
-
 import os
 import requests
 from dotenv import load_dotenv
@@ -17,21 +15,7 @@ LANG_CODES = {
 }
 
 def translate_text(text, source_language_name, target_language_name):
-    """
-    Traduz um texto de um idioma de origem para um idioma de destino.
 
-    Args:
-        text (str): Texto a ser traduzido.
-        source_language_name (str): Nome do idioma de origem (ex: "Português").
-        target_language_name (str): Nome do idioma de destino (ex: "Inglês").
-
-    Returns:
-        str: Texto traduzido.
-
-    Raises:
-        Exception: Se a chave da API estiver ausente ou a requisição falhar.
-        ValueError: Se os idiomas fornecidos não forem suportados.
-    """
     auth_key = os.getenv("DEEPL_API_KEY")
     if not auth_key:
         raise Exception("Chave da API não encontrada.")
@@ -60,18 +44,7 @@ def translate_text(text, source_language_name, target_language_name):
     return response.json()["translations"][0]["text"]
 
 def detect_language(text):
-    """
-    Detecta o idioma de origem de um texto com base na tradução automática.
 
-    Args:
-        text (str): Texto cuja língua deve ser detectada.
-
-    Returns:
-        str: Código do idioma detectado (ex: "PT", "EN").
-
-    Raises:
-        Exception: Se a chave da API estiver ausente ou a requisição falhar.
-    """
     auth_key = os.getenv("DEEPL_API_KEY")
     if not auth_key:
         raise Exception("Chave da API não encontrada.")

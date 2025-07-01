@@ -1,5 +1,4 @@
-"""Interface gráfica do tradutor multilíngue usando Tkinter."""
-
+import pyttsx3
 import tkinter as tk
 from tkinter import ttk
 from services.translator import translate_text, detect_language
@@ -13,14 +12,28 @@ LANGUAGES = {
     "Italiano": "IT"
 }
 
+VOICE_MAP = {
+    "EN": 2,
+    "PT": 0,
+}
+
+tts_engine = pyttsx3.init()
+
+def speak(text, lang_code="EN"):
+    voices = tts_engine.getProperty('voices')
+
+    if lang_code == "PT":
+        voice_index = 0
+    else:
+        voice_index = 2
+
+    tts_engine.setProperty('voice', voices[voice_index].id)
+    tts_engine.say(text)
+    tts_engine.runAndWait()
+
 def start_ui():
-    """
-    Inicializa a interface gráfica do tradutor.
-    Permite entrada de texto, seleção de idiomas, detecção automática e exibição da tradução.
-    """
 
     def on_translate_click():
-        """Callback para o botão 'Traduzir'. Realiza a tradução do texto inserido."""
         text = text_input.get("1.0", tk.END).strip()
         source_language = source_lang_input.get()
         target_language = target_lang_input.get()
@@ -34,7 +47,6 @@ def start_ui():
             output_text.insert(tk.END, f"Erro: {str(e)}")
 
     def on_detect_click():
-        """Callback para o botão 'Detectar idioma'. Identifica o idioma do texto inserido."""
         text = text_input.get("1.0", tk.END).strip()
         if not text:
             return
@@ -84,6 +96,30 @@ def start_ui():
 
     output_text = tk.Text(text_frame, height=12, width=45, bg="#f0f0f0", state="normal")
     output_text.grid(row=0, column=1, padx=5)
+
+    # Botões de áudio
+    audio_frame = ttk.Frame(app)
+    audio_frame.pack()
+
+    listen_input_btn = ttk.Button(
+        text_frame,
+        text="🔊 Ouvir texto original",
+        command=lambda: speak(
+            text_input.get("1.0", tk.END).strip(),
+            lang_code=LANGUAGES[source_lang_input.get()]
+        )
+    )
+    listen_input_btn.grid(row=1, column=0, sticky="w", padx=5, pady=(2, 0))
+
+    listen_output_btn = ttk.Button(
+        text_frame,
+        text="🔊 Ouvir tradução",
+        command=lambda: speak(
+            output_text.get("1.0", tk.END).strip(),
+            lang_code=LANGUAGES[target_lang_input.get()]
+        )
+    )
+    listen_output_btn.grid(row=1, column=1, sticky="w", padx=5, pady=(2, 0))
 
      # Botão de tradução
     translate_button = ttk.Button(app, text="Traduzir", command=on_translate_click)
