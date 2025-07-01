@@ -1,3 +1,5 @@
+"""Interface gráfica do tradutor multilíngue usando Tkinter."""
+
 import tkinter as tk
 from tkinter import ttk
 from services.translator import translate_text, detect_language
@@ -12,7 +14,13 @@ LANGUAGES = {
 }
 
 def start_ui():
+    """
+    Inicializa a interface gráfica do tradutor.
+    Permite entrada de texto, seleção de idiomas, detecção automática e exibição da tradução.
+    """
+
     def on_translate_click():
+        """Callback para o botão 'Traduzir'. Realiza a tradução do texto inserido."""
         text = text_input.get("1.0", tk.END).strip()
         source_language = source_lang_input.get()
         target_language = target_lang_input.get()
@@ -26,6 +34,7 @@ def start_ui():
             output_text.insert(tk.END, f"Erro: {str(e)}")
 
     def on_detect_click():
+        """Callback para o botão 'Detectar idioma'. Identifica o idioma do texto inserido."""
         text = text_input.get("1.0", tk.END).strip()
         if not text:
             return
@@ -38,15 +47,18 @@ def start_ui():
         except Exception as e:
             output_text.delete("1.0", tk.END)
             output_text.insert(tk.END, f"Erro na detecção: {str(e)}")
-
+    
+    # Inicialização da janela principal
     app = tk.Tk()
     app.title("TRADUTOR")
     app.geometry("820x480")
     app.resizable(False, False)
 
+    # Título
     title = ttk.Label(app, text="Tradutor Multilíngue", font=("Arial", 16, "bold"))
     title.pack(pady=10)
 
+    # Seção de seleção de idiomas
     selector_frame = ttk.Frame(app)
     selector_frame.pack(pady=5)
 
@@ -63,6 +75,7 @@ def start_ui():
     target_lang_input.current(1)
     target_lang_input.grid(row=0, column=4, padx=5)
 
+    # Área de entrada e saída de texto
     text_frame = ttk.Frame(app)
     text_frame.pack(padx=10, pady=10)
 
@@ -72,6 +85,7 @@ def start_ui():
     output_text = tk.Text(text_frame, height=12, width=45, bg="#f0f0f0", state="normal")
     output_text.grid(row=0, column=1, padx=5)
 
+     # Botão de tradução
     translate_button = ttk.Button(app, text="Traduzir", command=on_translate_click)
     translate_button.pack(pady=10)
 
