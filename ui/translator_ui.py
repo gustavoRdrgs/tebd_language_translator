@@ -40,11 +40,11 @@ def start_ui():
             output_text.insert(tk.END, f"Erro na detecção: {str(e)}")
 
     app = tk.Tk()
-    app.title("TRADUTOR")
+    app.title("Mini Tradutor")
     app.geometry("820x480")
     app.resizable(False, False)
 
-    title = ttk.Label(app, text="Tradutor Multilíngue", font=("Arial", 16, "bold"))
+    title = ttk.Label(app, text="TRADUÇÃO MULTILÍNGUE", font=("Archivo Black", 20, "bold"))
     title.pack(pady=10)
 
     selector_frame = ttk.Frame(app)
@@ -66,10 +66,10 @@ def start_ui():
     text_frame = ttk.Frame(app)
     text_frame.pack(padx=10, pady=10)
 
-    text_input = tk.Text(text_frame, height=12, width=45)
+    text_input = tk.Text(text_frame, height=10, width=30, font=("Gill Sans MT", 16))
     text_input.grid(row=0, column=0, padx=5)
 
-    output_text = tk.Text(text_frame, height=12, width=45, bg="#f0f0f0", state="normal")
+    output_text = tk.Text(text_frame, height=10, width=30, bg="#f0f0f0", state="normal", font=("Gill Sans MT", 16))
     output_text.grid(row=0, column=1, padx=5)
 
     translate_button = ttk.Button(app, text="Traduzir", command=on_translate_click)
